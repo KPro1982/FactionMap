@@ -1,0 +1,3 @@
+cd /D "C:\Users\Daniel\AppData\Local\DayZ"
+del /Q FactionMap
+
