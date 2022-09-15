@@ -17,9 +17,7 @@ class CfgMods
 		dir = "FactionMap";
 		credits = "Kpro1982";
 		author = "Kpro1982";
-		overview = "A new mod";
-		creditsJson = "FactionMap/Scripts/Data/Credits.json";
-		versionPath = "FactionMap/Scripts/Data/Version.hpp";
+		overview = "A plug in for VanillaPlusPlusMap";
 		type = "mod";
 		dependencies[] =
 		{
