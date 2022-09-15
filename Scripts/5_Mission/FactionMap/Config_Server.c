@@ -5,9 +5,9 @@
 
 class Config_Server
 {
-	private static ref Config_Server_Data m_Config_Server_Data = NULL;
-	private static const string configPath = "$profile:\\FactionMap\\Config_Server_Data.json";
-	private static const string configRoot = "$profile:\\FactionMap\\";	
+	 private static ref Config_Server_Data m_Config_Server_Data = NULL;
+	 private static const string configPath = "$profile:\\FactionMap\\Config_Server_Data.json";
+	 private static const string configRoot = "$profile:\\FactionMap\\";	
 	
 	
 	

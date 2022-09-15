@@ -2,6 +2,7 @@ modded class VPPMapMenu
 {    
 	private ButtonWidget m_JoinMap;
 	protected ref JoinMapDialog m_JoinMapDialog;
+	private string defaultInfoText;
 	
 	override void MapDoubleClick(Widget w, int x, int y, int button) {
 		string mapname = Config_Client.Get().m_mapname;
@@ -14,10 +15,32 @@ modded class VPPMapMenu
             string text = string.Format("Cursor X/Y: %1 / %2", Math.Round(coords[0]), Math.Round(coords[2]));
 			Print(string.Format("Cursor X/Y: %1 / %2", Math.Round(coords[0]), Math.Round(coords[2])));
 			GetRPCManager().SendRPC("FactionMap", "RPC_SendPingToServer", new Param4<string,string,string,vector>(mapname, username, steamid, coords));
-			
+			DisplayInfo("Ping sent to `" + mapname + "` map.", false, 5);
 		}
 		super.MapDoubleClick(w, x, y, button);
 	}
+	
+	void DisplayInfo(string newInfo, bool resetDefault = false, int seconds = 10)
+	{
+		seconds *= 1000;
+		if(resetDefault) 
+		{
+			defaultInfoText = newInfo;
+			return;
+		}
+		m_info_text.SetText(newInfo);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.ResetInfo, seconds, false);
+
+	
+	
+	}
+	void ResetInfo()
+	{
+		m_info_text.SetText(defaultInfoText);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.DisplayInfo);
+	
+	}
+	
 	
 	override bool OnClick(Widget w, int x, int y, int button)
     {
@@ -69,7 +92,7 @@ modded class VPPMapMenu
             if (!g_Game.CanUse3DMarkers())
             	tooltip += "\nThis server has disabled 3D markers feature!";
 
-            m_info_text.SetText(tooltip);
+            DisplayInfo(tooltip, true);
 
             ReloadMarkers();
             m_Initialized = true;
@@ -104,6 +127,7 @@ modded class VPPMapMenu
             m_PanelEditDialog.Show(false);
             m_MapWidget.Show(true);
             m_MapFakeBg.Show(false);
+			DisplayInfo("Double middle-click to send ping to map `" + Config_Client.Get().m_mapname + "`", false, 20);
         }
     }
 	
